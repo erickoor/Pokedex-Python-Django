@@ -1,0 +1,75 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block 'titulo' %} POKEDEX! {% endblock %}
+
+{% block 'head' %} 
+<link rel="stylesheet" href="{% static 'css/index.css' %}">
+{% endblock %}
+
+{% block 'conteudo' %}
+
+<div class="container index" style="width: 700px; text-align: center;">
+    <form action="{% url 'pesquisa_pokedex' %}" method="GET">
+        <div class="input-group mb-3">
+            <input type="text" class="form-control" placeholder="Nome do Pokemon..." aria-label="Recipient's username" aria-describedby="button-addon2" name="nome_pokemon">
+            <button class="btn btn-primary" type="submit" id="button-addon2">Pesquisar</button>
+        </div>
+    </form>
+    {% if pokemon_nome %}
+        <div class="container-xs">
+            <div class="row">
+                <div class="col">
+                    <div class="card" style="width: 300px;">
+                        <img src="{{imagem}}" class="card-img-top">
+                        <div class="card-body">
+                            <h2 class="card-title">{{pokemon_nome}} #{{id}}</h2>
+                            <p class="card-text">{{descricao}}</p>
+                        </div>
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item">Tipo: {{tipo}}</li>
+                             <li class="list-group-item">Espécie: {{especie}}</li>
+                            <li class="list-group-item">Altura: {{altura}}m</li>
+                            <li class="list-group-item">Peso: {{peso}}kg</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col">
+                    <label class="forma-shiny" for="">Forma Shiny:</label>
+                    <img src="{{shiny}}" class="shiny">
+                    <label class="forma-shiny status" for="">Status:</label>
+                    <table class="table table-light table-striped">
+                        <tbody>
+                          <tr>
+                            <th scope="row">HP:</th>
+                            <td>{{status.0}}</td>
+                            <th scope="row">ATK:</th>
+                            <td>{{status.1}}</td>
+                          </tr>
+                          <tr>
+                            <th scope="row">DEF:</th>
+                            <td>{{status.2}}</td>
+                            <th scope="row">SP.ATK:</th>
+                            <td>{{status.3}}</td>
+                          </tr>
+                          <tr>
+                            <th scope="row">SP.DEF:</th>
+                            <td >{{status.4}}</td>
+                            <th scope="row">SPEED:</th>
+                            <td>{{status.5}}</td>
+                          </tr>
+                        </tbody>
+                    </table>
+                    <label class="evolucao" for="">Linha Evolutiva:</label>
+                    {% for evolucao in evolucoes %}
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item" style= "margin-bottom: 2px; margin-top: 2px; padding: 0%;">{{evolucao}}</li>
+                    </ul>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    {% endif %}
+</div>
+
+{% endblock %}
